@@ -1,0 +1,37 @@
+<div class="d-flex justify-content-between align-items-center">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to 'Challenges', challenges_path  %></li>
+      <li class="breadcrumb-item active" aria-current="page"><%= @challenge.name %></li>
+    </ol>
+  </nav>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to 'All Chats', "#offcanvasExample", data: { bs_toggle: 'offcanvas' }, role: "button"  %>
+      </li>
+      <li class="breadcrumb-item"><%= link_to 'New Chat', challenge_chats_path(@challenge), data: { turbo_method: :post }  %></li>
+    </ol>
+  </nav>
+</div>
+<h1><%= @challenge.name %></h1>
+<%= raw(render_markdown(@challenge.content)) %>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Chats</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      <% if @challenge.chats.any? %>
+        <% @challenge.chats.each do |chat| %>
+          <li>
+            <%= link_to chat.title, chat_path(chat)  %>
+          </li>
+        <% end %>
+      <% else %>
+        <li>No chats yet. <%= link_to 'Create one.', challenge_chats_path(@challenge), data: { turbo_method: :post }  %></li>
+      <% end %>
+    </div>
+  </div>
+</div>

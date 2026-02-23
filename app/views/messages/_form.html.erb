@@ -1,0 +1,4 @@
+<%= simple_form_for [chat, message], html: { data: { controller: 'spin '}} do |f| %>
+  <%= f.input :content, placeholder: "Ask a question", required: true, label: false %>
+  <%= f.button :submit, 'Ask LLM', class: 'btn btn-primary', data: { action: 'click->spin#start'} %>
+<% end %>
