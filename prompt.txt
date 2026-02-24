@@ -1,0 +1,6 @@
+Four main areas to consider when writing a prompt:
+
+Persona
+Context
+Task
+Format
