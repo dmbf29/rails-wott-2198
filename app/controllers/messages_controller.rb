@@ -14,9 +14,10 @@ class MessagesController < ApplicationController
     @message.chat = @chat
     @message.role = "user"
 
+    # 1. Create the user's message
     if @message.save
-      # get a response from the rubyllm
       response = chat_response
+      # 5. Create the assistant's message
       Message.create(role: 'assistant', chat: @chat, content: response.content)
       redirect_to chat_path(@chat)
     else
@@ -27,9 +28,12 @@ class MessagesController < ApplicationController
   private
 
   def chat_response
-    ruby_llm = RubyLLM.chat
-    ruby_llm.with_instructions("#{SYSTEM_PROMPT}\n#{challenge_context}")
-    return ruby_llm.ask(@message.content)
+    # 2. Create the RubyLLM chat
+    @ruby_llm = RubyLLM.chat
+    # 4. Give the system prompt and context to the chat
+    @ruby_llm.with_instructions("#{SYSTEM_PROMPT}\n#{challenge_context}")
+    # 5. Ask the question of the user
+    return @ruby_llm.ask(@message.content)
   end
 
   def challenge_context
