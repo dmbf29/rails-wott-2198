@@ -15,8 +15,10 @@
 <div id="chat_title">
   <h1><%= @chat.title %></h1>
 </div>
+<%# We don't want to use @instance_var inside of partials %>
 <div id="messages">
   <%= render 'messages/messages', messages: @chat.messages.order(:created_at) %>
+  <%# inside of the 'messages' partial, i have access to a 'messages' variable %>
 </div>
 <div id="new_message">
   <%= render "messages/form", chat: @chat, message: @message %>
