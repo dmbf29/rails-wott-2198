@@ -45,9 +45,11 @@ class MessagesController < ApplicationController
       @ruby_llm.add_message(message)
     end
     # 3a. Give a summary of the conversation instead
-    # 4. Give the system prompt and context to the chat
+    # 4. Give the tool to the llm (in case it needs it)
+    @ruby_llm.with_tool(CreateChallengeTool.new)
+    # 5. Give the system prompt and context to the chat
     @ruby_llm.with_instructions("#{SYSTEM_PROMPT}\n#{challenge_context}")
-    # 5. Ask the question of the user
+    # 6. Ask the question of the user
     return @ruby_llm.ask(@message.content)
   end
 
